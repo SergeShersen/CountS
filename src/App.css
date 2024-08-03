@@ -1,0 +1,43 @@
+.App {
+  padding: 30px;
+  display: flex;
+}
+
+.App > div {
+  margin-right: 50px;
+}
+
+
+.arreror {
+  color:red;
+  width: 300px;
+  height: 100px;
+  border: 2px solid blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  border-radius: 10px;
+  background-color: blanchedalmond;
+  margin: 0;
+  
+}
+
+.notArreror {
+
+  width: 300px;
+  height: 100px;
+  border: 2px solid blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  border-radius: 10px;
+  background-color: blanchedalmond;
+  margin: 0;
+  color: blue;
+}
+
+.error {
+  border: 2px solid red
+}
