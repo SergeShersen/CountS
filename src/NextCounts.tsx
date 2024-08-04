@@ -88,16 +88,25 @@ const MainsScree = styled.div `
     border: 2px solid blue;
     background-color: blanchedalmond;
     width: 256px;
-    height: 50px;
+    height: 80px;
     padding: 20px;
     border-radius: 10px;
     span {
         width: 70%;
         display: flex;
         justify-content: space-around;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        color: blue;
+        font-size: 15px;
+        font-weight: 700;
     }
     input {
         width: 50%;
+        height: 30px;
+        font-size: 20px;
         
     }
 
