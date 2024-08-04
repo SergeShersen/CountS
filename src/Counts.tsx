@@ -30,7 +30,7 @@ export const Counts  = ( {count, setCount, maxGlobalValue, minGlobalValue,errors
 
     return (
         <CountScreen>
-                <h1 className= { maxGlobalValue < minGlobalValue || maxGlobalValue === minGlobalValue || count === maxGlobalValue ? 'arreror' : 'notArreror'}>{errors ? errors : count}</h1>  
+                <h1 className= { maxGlobalValue < minGlobalValue || maxGlobalValue === minGlobalValue || count === maxGlobalValue || minGlobalValue > maxGlobalValue? 'arreror' : 'notArreror'}>{errors ? errors : count}</h1>  
                 <ButtonBox>
                     <Button  
                         title = {'inc'} 

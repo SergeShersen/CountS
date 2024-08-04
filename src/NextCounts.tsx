@@ -42,7 +42,7 @@ export const NextCounts  =({setGlobalMaxValue,setGlobalMinValue,setCount,maxGlob
                 <span>
                     <label>Max value</label>
                     <input
-                        className= { (maxGlobalValue < -1 || minGlobalValue === maxGlobalValue || minGlobalValue > maxGlobalValue) ? 'error' : ''}
+                        className= { (maxGlobalValue < 0 || minGlobalValue === maxGlobalValue || minGlobalValue > maxGlobalValue) ? 'error' : ''}
                         type="number" 
                         value={maxGlobalValue} 
                         onChange={changeItemMaxHandler}
@@ -51,7 +51,7 @@ export const NextCounts  =({setGlobalMaxValue,setGlobalMinValue,setCount,maxGlob
                 <span>
                     <label>Min value</label>
                     <input
-                        className= { (minGlobalValue < -1 || minGlobalValue === maxGlobalValue || minGlobalValue > maxGlobalValue) ? 'error' : ''}
+                        className= { (minGlobalValue < 0 || minGlobalValue === maxGlobalValue || minGlobalValue > maxGlobalValue) ? 'error' : ''}
                         type="number"  
                         value={minGlobalValue} 
                         onChange={changeItemMinHandler}

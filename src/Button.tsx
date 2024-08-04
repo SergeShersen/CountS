@@ -12,9 +12,13 @@ export const Button  = ({title,onClick,disabled}:ButtonProps) => {
 }
 
 const A = styled.button`
-    width: 50px;
+    width: 100px;
     height:30px;
-    background: forestgreen;
+    background: blue;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    color: blanchedalmond;
     &:disabled {
         background: #ffff;
     }

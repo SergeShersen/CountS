@@ -47,7 +47,7 @@ export function App() {
 
 
         useEffect(() => {
-            if(maxGlobalValue < -1 || maxGlobalValue === minGlobalValue || maxGlobalValue < minGlobalValue || minGlobalValue<-1){
+            if(maxGlobalValue < 0 || maxGlobalValue === minGlobalValue || maxGlobalValue < minGlobalValue || minGlobalValue < 0 || minGlobalValue > maxGlobalValue){
                 setErrors('Incorrect')
             } else if( maxGlobalValue !== maxSaveValue || minGlobalValue !== minSaveValue){
                 setErrors('Press set')
