@@ -1,40 +1,42 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Button } from "./Button"
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { RootState } from './store';
+import { useDispatch } from 'react-redux';
+import { countFromLocalStorage, errorForCountAC, maxValueFromLocalStorage, minValueFromLocalStorage } from './appReducer';
 
-type Props = {
-    maxGlobalValue: number
-    minGlobalValue: number
-    minSaveValue: number
-    maxSaveValue: number
-    setMaxSaveValue:(maxSaveValue: number) =>void
-    setMinSaveValue:(minSaveValue: number) =>void
-    setGlobalMaxValue: (maxValue: number) =>void
-    setGlobalMinValue:(minValue: number) =>void
-    setCount:(minValue: number) =>void
-    
-}
 
-export const NextCounts  =({setGlobalMaxValue,setGlobalMinValue,setCount,maxGlobalValue,minGlobalValue,setMinSaveValue,setMaxSaveValue,minSaveValue,maxSaveValue}: Props) => {
+
+
+export const NextCounts  =() => {
+
+    const maxGlobalValue = useSelector<RootState, number>(state => state.counts.counterSettings.maxValue)
+    const minGlobalValue = useSelector<RootState, number>(state => state.counts.counterSettings.minValue)
+    const dispatch = useDispatch()
     
-    useEffect ( () => {
-        localStorage.setItem('maxValues', JSON.stringify(maxSaveValue) )
-    }, [maxSaveValue]
-    )
-    useEffect ( () => {
-        localStorage.setItem('minValues', JSON.stringify(minSaveValue) )
-    }, [minSaveValue]
-    )
+    
+
 
     const changeItemMaxHandler = (e:ChangeEvent<HTMLInputElement>) =>{
-        setGlobalMaxValue(+(e.currentTarget.value))
+
+    localStorage.setItem('maxValues', JSON.stringify(+(e.currentTarget.value)) )
+    dispatch(maxValueFromLocalStorage({maxValues:+(e.currentTarget.value)}) )
+    dispatch(errorForCountAC({error: 'Pleas set'}))
     }
 
     const changeItemMinHandler = (e:ChangeEvent<HTMLInputElement>) =>{
-        setGlobalMinValue(+(e.currentTarget.value))
+    localStorage.setItem('minValues', JSON.stringify(+(e.currentTarget.value)) )
+    dispatch(minValueFromLocalStorage({minValues:+(e.currentTarget.value)}) )
+    dispatch(errorForCountAC({error: 'Pleas set'}))
     }
 
-   
+   const onSetHandler = () => {
+
+    localStorage.setItem('counter', JSON.stringify(minGlobalValue) )
+    dispatch(countFromLocalStorage({minValues:minGlobalValue}))
+    dispatch(errorForCountAC({error: ''}))
+   }
     
     return (
         <CountScreen>
@@ -42,8 +44,9 @@ export const NextCounts  =({setGlobalMaxValue,setGlobalMinValue,setCount,maxGlob
                 <span>
                     <label>Max value</label>
                     <input
-                        className= { (maxGlobalValue < 0 || minGlobalValue === maxGlobalValue || minGlobalValue > maxGlobalValue) ? 'error' : ''}
+                        className= { (maxGlobalValue < 0  || minGlobalValue > maxGlobalValue) ? 'error' : ''}
                         type="number" 
+
                         value={maxGlobalValue} 
                         onChange={changeItemMaxHandler}
                     />
@@ -51,7 +54,7 @@ export const NextCounts  =({setGlobalMaxValue,setGlobalMinValue,setCount,maxGlob
                 <span>
                     <label>Min value</label>
                     <input
-                        className= { (minGlobalValue < 0 || minGlobalValue === maxGlobalValue || minGlobalValue > maxGlobalValue) ? 'error' : ''}
+                        className= { (minGlobalValue < 0 || minGlobalValue > maxGlobalValue) ? 'error' : ''}
                         type="number"  
                         value={minGlobalValue} 
                         onChange={changeItemMinHandler}
@@ -61,12 +64,8 @@ export const NextCounts  =({setGlobalMaxValue,setGlobalMinValue,setCount,maxGlob
             <ButtonBox>
                 <Button  
                 title='Set'
-                disabled = {maxGlobalValue === minGlobalValue || maxGlobalValue < minGlobalValue || maxGlobalValue < 0}   
-                onClick={() => {
-                    setCount(minGlobalValue)
-                    setMaxSaveValue(maxGlobalValue)
-                    setMinSaveValue(minGlobalValue)
-                }} />
+                disabled = { maxGlobalValue < minGlobalValue || maxGlobalValue < 0 || minGlobalValue < 0}   
+                onClick={onSetHandler} />
             </ButtonBox>
         </CountScreen>
     )

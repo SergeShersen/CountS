@@ -2,44 +2,41 @@
 import React, { useState } from 'react';
 import { Button } from "./Button"
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { RootState } from './store';
+import { useDispatch } from 'react-redux';
+import { incCountAC, resetCountAC } from './appReducer';
 
 
-
-
-type CountsType = {
-    count: number
-    setCount: (counts:number) => void
-    maxGlobalValue: number
-    minGlobalValue: number
-    errors: string
-    setErrors: (string: string) => void
+export const Counts  = ( ) => {
     
-}
+   const count = useSelector<RootState, any>(state => state.counts.currentCounter)
+   const maxGlobalValue = useSelector<RootState, any>(state => state.counts.counterSettings.maxValue)
+   const minGlobalValue = useSelector<RootState, any>(state => state.counts.counterSettings.minValue)
+   const errors = useSelector<RootState, any>(state => state.counts.mainError)
 
-export const Counts  = ( {count, setCount, maxGlobalValue, minGlobalValue,errors}:CountsType) => {
-    
-   
+   const dispatch = useDispatch()
     
     const incHendler = () => {
-        setCount(count + 1 )
+        dispatch(incCountAC())
     }
     const resetHendler = () => {
-        setCount(minGlobalValue)
+        dispatch(resetCountAC())
     }
 
 
     return (
         <CountScreen>
-                <h1 className= { maxGlobalValue < minGlobalValue || maxGlobalValue === minGlobalValue || count === maxGlobalValue || minGlobalValue > maxGlobalValue? 'arreror' : 'notArreror'}>{errors ? errors : count}</h1>  
+                <h1 className= { maxGlobalValue < minGlobalValue ||  minGlobalValue > maxGlobalValue || count === maxGlobalValue? 'arreror' : 'notArreror'}>{errors ? errors : count}</h1>  
                 <ButtonBox>
                     <Button  
                         title = {'inc'} 
-                        disabled = { maxGlobalValue < minGlobalValue || maxGlobalValue === minGlobalValue || count === maxGlobalValue? true : false} 
+                        disabled = { maxGlobalValue < minGlobalValue  || count === maxGlobalValue} 
                         onClick={incHendler}
                     />
                     <Button  
                         title = {'reset'} 
-                        disabled = { count > minGlobalValue ? false : true} 
+                        disabled = { count <= minGlobalValue } 
                         onClick={resetHendler}
                     />
                 </ButtonBox>
